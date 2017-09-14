@@ -1,0 +1,75 @@
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Books</title>
+      
+    </head>
+
+    <style>
+        p {
+            margin: 0px 0px 0px 0px;
+
+        }
+
+        table, th, td{
+          border: 1px black solid;
+          
+        }
+
+        input{
+          display: inline-block;
+        }
+
+        th {
+          background-color: #DDCDCD;
+        }
+
+        th, td{
+          padding: 0px 10px 0px 10px;
+        }
+
+        button{
+          margin-top: 10px;
+        }
+    </style>
+
+    <body>
+
+
+      <h1>Add a Book</h1>
+      <form action='/add' method='POST'>
+        <label for="title">Title:<input type="text" name="title" id="title"></label>
+        <label for="author">Author:<input type="text" name="author" id="author"></label>
+        <input type="submit" value="Add a book">
+      </form>
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Date Added</th>
+          <th>Action</th>
+        </tr>
+
+      {% for entry in all_books: %}
+         <tr> <td> {{ entry['title'] }}</td>
+              <td> {{ entry['author'] }}</td> 
+              <!-- <td>{{entry['created_at']}}.strftime('%B %d %Y')  </td> -->
+              <td>{{entry['created_at']}}  </td>
+
+              <td>
+              <form action='/delete' method='POST'>
+                  <button type="submit" name="delete" value="{{entry['id']}}">Delete</button>
+                  <!-- <input name= "delete"  type="submit" value="Delete {{entry['id']}}"> -->
+              </form>
+              <form action='/update' method='POST'>
+                <button type="submit" name="update" value="{{entry['id']}}">Update</button>
+            </form>
+            </td>
+         </tr>
+      {% endfor %}
+
+    </table>
+    </body>
+</html>
